@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "List.h"
+#include "Stack.h"
 
 // TEST_CASE("Constructors") {
 //     SECTION("Default constructor"){
@@ -21,6 +22,16 @@ TEST_CASE("append"){
     REQUIRE(list.getLast() == 34);
 }
 
+TEST_CASE("STACK"){
+    Stack stack;
+    stack.push(8);
+    stack.push(9);
+    stack.push(10);
+    REQUIRE(stack.peekTop() == 10);
+    stack.pop();
+    REQUIRE(stack.peekTop() == 9);
+    REQUIRE(stack.pop() == 9);
+}
 // TEST_CASE("prepend"){
 //     List list;
 //     list.prepend(4);

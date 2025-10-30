@@ -15,13 +15,13 @@ List::Node::Node(Item it, Node* next){
 }
 
 List::Node::~Node(){
-    cout << "I'm about to be destroyed! ";
-    cout << myItem;
-    cout << endl;
+    // cout << "I'm about to be destroyed! ";
+    // cout << myItem;
+    // cout << endl;
     delete myNext;
-    cout << "Bye bye";
-    cout << myItem;
-    cout << endl;
+    // cout << "Bye bye";
+    // cout << myItem;
+    // cout << endl;
 }
 
 Item List::Node::getItem() const{
@@ -32,6 +32,10 @@ void List::Node::setNext(Node* next){
     myNext = next;
 }
 
+List::Node* List::Node::getNext() const{
+    return myNext;
+}
+
 // CLASS LIST
 
 List::List(){
@@ -40,7 +44,7 @@ List::List(){
 }
 
 List::~List(){
-    cout << "Some criminal want to delete me! A LIST!" << endl;
+    // cout << "Some criminal want to delete me! A LIST!" << endl;
     delete myFirst;
 }
 
@@ -87,4 +91,15 @@ void List::prepend(Item it){
         myFirst = newNode;
         mySize++;
     }
+}
+
+
+Item List::removeFirst(){
+    Node* temp = myFirst;
+    Item tempItem = myFirst->getItem();
+    myFirst = myFirst->getNext();
+    temp->setNext(nullptr);
+    delete temp;
+    mySize--;
+    return tempItem;
 }

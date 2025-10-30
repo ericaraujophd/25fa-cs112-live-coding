@@ -3,41 +3,42 @@
 
 typedef int Item;
 
-class List {
+class List{
 public:
-    // constructors
     List();
+    // List(Item it);
     ~List();
 
-    // getters
     int getSize() const;
+    Item getFirst() const;
+    Item getLast() const;
     bool isEmpty() const;
 
-    // setters
+    // insertions
     void append(Item it);
     void prepend(Item it);
 
-    // deletion
-    void deleteNode(Item it);
+    Item removeFirst();
 
 private:
-    class Node {
+    // class NODE
+    class Node{
     public:
         Node();
         Node(Item it, Node* next);
         ~Node();
 
-        void setNext(Node *next);
         Item getItem() const;
-
+        Node* getNext() const;
+        void setNext(Node* next);
     private:
         Item myItem;
         Node* myNext;
     };
-
     Node* myFirst;
     Node* myLast;
     int mySize;
 };
+
 
 #endif

@@ -1,4 +1,6 @@
 #include "List.h"
+#include <iostream>
+using namespace std;
 
 List::List(){
     myFirst = myLast = nullptr;
@@ -7,6 +9,8 @@ List::List(){
 
 List::~List(){
     mySize = 0;
+    cout << "calling the destructor of list" << endl;
+    delete myFirst;
 }
 
 int List::getSize() const{
@@ -44,8 +48,24 @@ void List::prepend(Item it){
     }
 }
 
+void List::deleteNode(Item it){
+    // Node *prevNode = myFirst;
+    // Node *iterNode = myFirst;
+    // while(iterNode != nullptr){
+    //     if(iterNode->getItem() == it){
+    //         // remove it here
+
+    //     }
+    // }
+
+}
+
 
 /// NODE CLASS
+
+Item List::Node::getItem() const{
+    return myItem;
+}
 
 List::Node::Node(){
     myItem = -1;
@@ -59,8 +79,16 @@ List::Node::Node(Item it, Node* next){
 }
 
 List::Node::~Node(){
+    cout << "Starting to delete node ";
+    cout << myItem;
+    cout << endl;
     delete myNext;
+    cout << "I am going to disappear now!";
+    cout << myItem;
+    cout << endl;
 }
+
+
 
 void List::Node::setNext(Node *next){
     myNext = next;
