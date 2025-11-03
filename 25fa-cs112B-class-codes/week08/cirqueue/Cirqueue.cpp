@@ -55,9 +55,10 @@ void Cirqueue::add(Item it){
 }
 Item Cirqueue::remove(){
     if(!isEmpty()){
+        Item temp = myArray[myFirstIndex];
         myFirstIndex = (myFirstIndex + 1) % capacity;
         mySize--;
-        return myArray[myFirstIndex-1];
+        return temp;
     }
     throw range_error("You've emptied my heart!\n");
 }
