@@ -38,4 +38,3 @@ TEST_CASE("queue"){
     REQUIRE(q1.peekLast() == 4);
 
 }
-
