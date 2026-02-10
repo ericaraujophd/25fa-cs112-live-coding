@@ -4,24 +4,31 @@
 #include <string>
 using namespace std;
 
-class Pair{
-    public:
-        // constructors
-        Pair();
-        Pair(int, int);
-        // getters
-        int getFirst() const;
-        int getSecond() const;
-        // setters
-        void setFirst(int);
-        void setSecond(int);
+typedef int Item;
 
-        // toString
-        string toString() const;
-    private:
-        int myFirst;
-        int mySecond;
+class Pair {
+public:
+    // constructors
+    Pair();
+    Pair(Item first, Item second);
+
+    // getters
+    Item getFirst() const;
+    Item getSecond() const;
+
+    // setters
+    void setFirst(Item newVal);
+    void setSecond(Item newVal);
+
+    // toString
+    string toString() const;
+
+private:
+    Item myFirst;
+    Item mySecond;
 };
 
-ostream &operator<<(ostream &out, const Pair &p);
+// Define << for when left operand is an ostream and right is a Pair object
+ostream& operator<<(ostream& out, const Pair& p);
+
 #endif
