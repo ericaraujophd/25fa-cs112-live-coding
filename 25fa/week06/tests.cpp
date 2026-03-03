@@ -1,26 +1,26 @@
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
 #include "List.h"
+#include "catch.hpp"
 
-// TEST_CASE("Constructors") {
-//     SECTION("Default constructor"){
-//         List list;
-//         REQUIRE(list.getSize() == 0);
-//     }
-// }
-
-TEST_CASE("append"){
-    List list;
-    list.append(5);
-    list.append(7);
-    list.append(1);
-
-    REQUIRE(list.getSize() == 3);
+TEST_CASE("default constructor") {
+    List scores;
+    REQUIRE(scores.getSize() == 0);
 }
 
-// TEST_CASE("toString"){
-    
-// }
+TEST_CASE("prepend") {
+    SECTION("empty list") {
+        List l;
+        l.prepend(55);
+        REQUIRE(l.getSize() == 1);
+        // REQUIRE(l.getFirst() == 55);
+        // REQUIRE(l.getLast() == 55);
+    }
 
-// TEST_CASE("<< operator"){
-// }
+    SECTION("non-empty list") {
+        List l;
+        l.prepend(55);
+        l.prepend(44);
+        REQUIRE(l.getSize() == 2);
+        // MORE Here.
+    }
+}

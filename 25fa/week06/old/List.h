@@ -9,10 +9,10 @@ public:
     int getSize() const;
     void prepend(const Item& it);
 
-private:
+public:
     class Node {
     public:
-        Node();
+        Node(const Item& it);
 
     private:
         Item myItem;

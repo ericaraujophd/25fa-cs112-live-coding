@@ -1,95 +1,31 @@
+
 #include "List.h"
-#include <iostream>
-using namespace std;
 
-List::List(){
+List::List() {
+    mySize = 0;
     myFirst = myLast = nullptr;
-    mySize = 0;
 }
 
-List::~List(){
-    mySize = 0;
-    cout << "calling the destructor of list" << endl;
-    delete myFirst;
-}
-
-int List::getSize() const{
+int List::getSize() const {
     return mySize;
 }
 
-bool List::isEmpty() const{
-    return (mySize == 0);
-}
+void List::prepend(const Item& it) {
+    // make new node
+    // incrfement mySize
+    // put the value in the new node
+    // set myNext in the new node to nullptr
+    // myFirst and myLast to new node.
 
-void List::append(Item it){
-    if(mySize == 0){
-        Node *node = new Node(it, nullptr);
-        myFirst = myLast = node;
-        mySize++;
+    Node* tmp = new Node(it);
+    if (mySize == 0) {
+        myFirst = myLast = tmp;
     }
-    else{
-        Node *node = new Node(it, nullptr);
-        myLast->setNext(node);
-        myLast = node;
-        mySize++;
-    }
+    mySize++;
 }
 
-void List::prepend(Item it){
-    if(mySize==0){
-        Node *node = new Node(it, myFirst);
-        myFirst = myLast = node;
-        mySize++;
-    }
-    else{
-        Node *node = new Node(it, myFirst);
-        myFirst = node;
-        mySize++;
-    }
-}
-
-void List::deleteNode(Item it){
-    // Node *prevNode = myFirst;
-    // Node *iterNode = myFirst;
-    // while(iterNode != nullptr){
-    //     if(iterNode->getItem() == it){
-    //         // remove it here
-
-    //     }
-    // }
-
-}
-
-
-/// NODE CLASS
-
-Item List::Node::getItem() const{
-    return myItem;
-}
-
-List::Node::Node(){
-    myItem = -1;
-    myNext = nullptr;
-
-}
-
-List::Node::Node(Item it, Node* next){
+// constructor for inner Node class.
+List::Node::Node(const Item& it) {
     myItem = it;
-    myNext = next;
-}
-
-List::Node::~Node(){
-    cout << "Starting to delete node ";
-    cout << myItem;
-    cout << endl;
-    delete myNext;
-    cout << "I am going to disappear now!";
-    cout << myItem;
-    cout << endl;
-}
-
-
-
-void List::Node::setNext(Node *next){
-    myNext = next;
+    myNext = nullptr;
 }
