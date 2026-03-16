@@ -14,7 +14,10 @@ public:
     Item getFirst() const;
     Item getLast() const;
     void prepend(const Item& it);
+    void append(const Item& it);
     string toString() const;
+    Item removeLast();   // linear
+    Item removeFirst();  // constant
 
 private:
     class Node {

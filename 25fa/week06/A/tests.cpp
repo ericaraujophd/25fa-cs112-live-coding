@@ -43,8 +43,11 @@ TEST_CASE("toString") {
         l.prepend(33);
         l.prepend(22);
         l.prepend(11);
-        cout << l.toString() << endl;
+        // cout << l.toString() << endl;
         // output should be:
         // [11, 22, 33, 44, 55]
+        ostringstream oss;
+        oss << l.toString();
+        REQUIRE(oss.str() == "[11, 22, 33, 44, 55]");
     }
 }

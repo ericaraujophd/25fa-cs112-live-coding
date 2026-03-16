@@ -19,7 +19,7 @@ List::Node::Node(const Item& it, Node* next) {
 }
 
 List::Node::~Node() {
-    cout << "deleting node at " << this << endl;
+    // cout << "deleting node at " << this << endl;
     delete myNext;
 }
 
@@ -30,12 +30,25 @@ int List::getSize() const {
 void List::prepend(const Item& it) {
     // when mysize == 0, myFirst is null;
     // otherwise, myFirst points to the first node.
+    // in both cases, it is the correct value for myNext
+    // in the new Node.
     Node* tmp = new Node(it, myFirst);
     if (mySize == 0) {
         myFirst = myLast = tmp;
     } else {
         myFirst = tmp;
     }
+    mySize++;
+}
+
+void List::append(const Item& it) {
+    Node* tmp = new Node(it, nullptr);
+    if (mySize == 0) {
+        myFirst = tmp;
+    } else {
+        myLast->myNext = tmp;
+    }
+    myLast = tmp;
     mySize++;
 }
 

@@ -164,7 +164,7 @@ TEST_CASE("== comparision") {
         PyList p;
         PyList p2;
         REQUIRE(p == p2);
-    }
+        if (p.operator==(p2)) }
     SECTION("non-empty") {
         PyList p;
         for (int i = 0; i < 10000; i++) {
