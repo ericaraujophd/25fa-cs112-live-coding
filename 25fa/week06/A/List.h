@@ -16,8 +16,9 @@ public:
     void prepend(const Item& it);
     void append(const Item& it);
     string toString() const;
-    Item removeLast();   // linear
-    Item removeFirst();  // constant
+    // Item removeLast();   // linear
+    // Item removeFirst();  // constant
+    bool operator==(const List& rhs) const;
 
 private:
     class Node {

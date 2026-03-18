@@ -84,3 +84,21 @@ string List::toString() const {
 
     return s;
 }
+
+bool List::operator==(const List& rhs) const {
+    if (mySize != rhs.mySize) {
+        return false;
+    }
+    // point to the first node of my list.
+    Node* curr = myFirst;
+    Node* rhsCurr = rhs.myFirst;
+    while (curr != nullptr) {
+        if (curr->myItem != rhsCurr->myItem) {
+            return false;
+        }
+        // move each pointer to the next node
+        curr = curr->myNext;
+        rhsCurr = rhsCurr->myNext;
+    }
+    return true;
+}

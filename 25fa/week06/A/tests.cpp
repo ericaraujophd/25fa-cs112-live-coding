@@ -51,3 +51,39 @@ TEST_CASE("toString") {
         REQUIRE(oss.str() == "[11, 22, 33, 44, 55]");
     }
 }
+
+TEST_CASE("operator==") {
+    SECTION("empty lists") {
+        List l0;
+        List l1;
+        REQUIRE(l0 == l1);
+    }
+    SECTION("empty vs non-empty") {
+        List l0;
+        List l1;
+        l1.append(11);
+        REQUIRE(!(l0 == l1));
+        REQUIRE(!(l1 == l0));
+    }
+    SECTION("lists of different lengths") {
+        List l0;
+        l0.append(11);
+        List l1;
+        l1.prepend(22);
+        l1.prepend(11);
+        REQUIRE(!(l0 == l1));
+        REQUIRE(!(l1 == l0));
+    }
+    SECTION("lists with different values") {
+        List l0;
+        l0.append(11);
+        l0.append(22);
+        l0.append(33);
+        List l1;
+        l1.append(11);
+        l1.append(23);
+        l1.append(33);
+        REQUIRE(!(l0 == l1));
+        REQUIRE(!(l1 == l0));
+    }
+}
