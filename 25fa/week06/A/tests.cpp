@@ -87,3 +87,54 @@ TEST_CASE("operator==") {
         REQUIRE(!(l1 == l0));
     }
 }
+
+TEST_CASE("remove()") {
+    SECTION("bad index") {
+        List l;
+        REQUIRE_THROWS_AS(l.remove(-1), underflow_error);
+        REQUIRE_THROWS_AS(l.remove(0), underflow_error);
+        l.append(11);
+        REQUIRE_THROWS_AS(l.remove(1), underflow_error);
+    }
+    SECTION("middle node") {
+        List l;
+        l.append(11);
+        l.append(22);
+        l.append(33);
+        Item res = l.remove(1);
+        REQUIRE(res == 22);
+        REQUIRE(l.getSize() == 2);
+        REQUIRE(l.getFirst() == 11);
+        REQUIRE(l.getLast() == 33);
+        REQUIRE(l.toString() == "[11, 33]");
+    }
+    SECTION("first node") {
+        List l;
+        l.append(11);
+        l.append(22);
+        l.append(33);
+        REQUIRE(l.remove(0) == 11);
+        REQUIRE(l.getSize() == 2);
+        REQUIRE(l.getFirst() == 22);
+        REQUIRE(l.getLast() == 33);
+        REQUIRE(l.toString() == "[22, 33]");
+    }
+    SECTION("last node") {
+        List l;
+        l.append(11);
+        l.append(22);
+        l.append(33);
+        REQUIRE(l.remove(2) == 33);
+        REQUIRE(l.getSize() == 2);
+        REQUIRE(l.getFirst() == 11);
+        REQUIRE(l.getLast() == 22);
+        REQUIRE(l.toString() == "[11, 22]");
+    }
+    SECTION("only 1 node") {
+        List l;
+        l.append(11);
+        REQUIRE(l.remove(0) == 11);
+        REQUIRE(l.getSize() == 0);
+        REQUIRE(l.toString() == "[]");
+    }
+}

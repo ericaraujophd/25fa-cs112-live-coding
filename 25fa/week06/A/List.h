@@ -19,6 +19,7 @@ public:
     // Item removeLast();   // linear
     // Item removeFirst();  // constant
     bool operator==(const List& rhs) const;
+    Item remove(int idx);
 
 private:
     class Node {

@@ -102,3 +102,34 @@ bool List::operator==(const List& rhs) const {
     }
     return true;
 }
+
+Item List::remove(int idx) {
+    if (idx < 0 || idx >= mySize) {
+        throw underflow_error("bad index");
+    }
+
+    Node* prevPtr = nullptr;
+    // dPtr is going to point to the ndoe to delete.
+    Node* dPtr = myFirst;
+    for (int i = 0; i < idx; i++) {
+        prevPtr = dPtr;
+        dPtr = dPtr->myNext;
+    }
+
+    // handle deleting first node
+    if (prevPtr == nullptr) {
+        myFirst = dPtr->myNext;
+    } else {
+        // deleting a "middle" node
+        prevPtr->myNext = dPtr->myNext;
+    }
+    if (dPtr == myLast) {
+        myLast = prevPtr;
+    }
+
+    Item res = dPtr->myItem;
+    dPtr->myNext = nullptr;
+    delete dPtr;
+    mySize--;
+    return res;
+}
