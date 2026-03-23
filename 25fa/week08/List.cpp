@@ -1,95 +1,135 @@
+
 #include "List.h"
+
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
-List::List(){
-    myFirst = myLast = nullptr;
+List::List() {
     mySize = 0;
+    myFirst = myLast = nullptr;
 }
 
-List::~List(){
-    mySize = 0;
-    // cout << "calling the destructor of list" << endl;
+List::~List() {
     delete myFirst;
 }
 
-int List::getSize() const{
-    return mySize;
-}
-
-bool List::isEmpty() const{
-    return (mySize == 0);
-}
-
-void List::append(Item it){
-    if(mySize == 0){
-        Node *node = new Node(it, nullptr);
-        myFirst = myLast = node;
-        mySize++;
-    }
-    else{
-        Node *node = new Node(it, nullptr);
-        myLast->setNext(node);
-        myLast = node;
-        mySize++;
-    }
-}
-
-void List::prepend(Item it){
-    if(mySize==0){
-        Node *node = new Node(it, myFirst);
-        myFirst = myLast = node;
-        mySize++;
-    }
-    else{
-        Node *node = new Node(it, myFirst);
-        myFirst = node;
-        mySize++;
-    }
-}
-
-void List::deleteNode(Item it){
-    // Node *prevNode = myFirst;
-    // Node *iterNode = myFirst;
-    // while(iterNode != nullptr){
-    //     if(iterNode->getItem() == it){
-    //         // remove it here
-
-    //     }
-    // }
-
-}
-
-
-/// NODE CLASS
-
-Item List::Node::getItem() const{
-    return myItem;
-}
-
-List::Node::Node(){
-    myItem = -1;
-    myNext = nullptr;
-
-}
-
-List::Node::Node(Item it, Node* next){
+List::Node::Node(const Item& it, Node* next) {
     myItem = it;
     myNext = next;
 }
 
-List::Node::~Node(){
-    cout << "Starting to delete node ";
-    cout << myItem;
-    cout << endl;
+List::Node::~Node() {
+    // cout << "deleting node at " << this << endl;
     delete myNext;
-    cout << "I am going to disappear now!";
-    cout << myItem;
-    cout << endl;
 }
 
+int List::getSize() const {
+    return mySize;
+}
 
+void List::prepend(const Item& it) {
+    // when mysize == 0, myFirst is null;
+    // otherwise, myFirst points to the first node.
+    // in both cases, it is the correct value for myNext
+    // in the new Node.
+    Node* tmp = new Node(it, myFirst);
+    if (mySize == 0) {
+        myFirst = myLast = tmp;
+    } else {
+        myFirst = tmp;
+    }
+    mySize++;
+}
 
-void List::Node::setNext(Node *next){
-    myNext = next;
+void List::append(const Item& it) {
+    Node* tmp = new Node(it, nullptr);
+    if (mySize == 0) {
+        myFirst = tmp;
+    } else {
+        myLast->myNext = tmp;
+    }
+    myLast = tmp;
+    mySize++;
+}
+
+// return the first item in the list.
+Item List::getFirst() const {
+    if (mySize == 0) {
+        throw range_error("empty list");
+    }
+    return myFirst->myItem;
+    // return (*myFirst).myItem;
+}
+
+// return the first item in the list.
+Item List::getLast() const {
+    if (mySize == 0) {
+        throw range_error("empty list");
+    }
+    return myLast->myItem;
+    // return (*myLast).myItem;
+}
+
+string List::toString() const {
+    string s = "[";
+    for (Node* curr = myFirst; curr != nullptr; curr = curr->myNext) {
+        s += to_string(curr->myItem);
+        // only add ', ' if we are not looking at the last node.
+        if (curr->myNext != nullptr) {
+            s += ", ";
+        }
+    }
+    s += "]";
+
+    return s;
+}
+
+bool List::operator==(const List& rhs) const {
+    if (mySize != rhs.mySize) {
+        return false;
+    }
+    // point to the first node of my list.
+    Node* curr = myFirst;
+    Node* rhsCurr = rhs.myFirst;
+    while (curr != nullptr) {
+        if (curr->myItem != rhsCurr->myItem) {
+            return false;
+        }
+        // move each pointer to the next node
+        curr = curr->myNext;
+        rhsCurr = rhsCurr->myNext;
+    }
+    return true;
+}
+
+Item List::remove(int idx) {
+    if (idx < 0 || idx >= mySize) {
+        throw range_error("bad index");
+    }
+
+    Node* prevPtr = nullptr;
+    // dPtr is going to point to the ndoe to delete.
+    Node* dPtr = myFirst;
+    for (int i = 0; i < idx; i++) {
+        prevPtr = dPtr;
+        dPtr = dPtr->myNext;
+    }
+
+    // handle deleting first node
+    if (prevPtr == nullptr) {
+        myFirst = dPtr->myNext;
+    } else {
+        // deleting a "middle" node
+        prevPtr->myNext = dPtr->myNext;
+    }
+    if (dPtr == myLast) {
+        myLast = prevPtr;
+    }
+
+    Item res = dPtr->myItem;
+    dPtr->myNext = nullptr;
+    delete dPtr;
+    mySize--;
+    return res;
 }

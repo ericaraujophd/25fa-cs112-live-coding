@@ -1,43 +1,39 @@
 #ifndef _LIST_H_
 #define _LIST_H_
 
+#include <ostream>
+using namespace std;
+
 typedef int Item;
 
 class List {
 public:
-    // constructors
     List();
     ~List();
-
-    // getters
     int getSize() const;
-    bool isEmpty() const;
-
-    // setters
-    void append(Item it);
-    void prepend(Item it);
-
-    // deletion
-    void deleteNode(Item it);
+    Item getFirst() const;
+    Item getLast() const;
+    void prepend(const Item& it);
+    void append(const Item& it);
+    string toString() const;
+    // Item removeLast();   // linear
+    // Item removeFirst();  // constant
+    bool operator==(const List& rhs) const;
+    Item remove(int idx);
 
 private:
     class Node {
     public:
-        Node();
-        Node(Item it, Node* next);
+        Node(const Item& it, Node* next);
         ~Node();
 
-        void setNext(Node *next);
-        Item getItem() const;
-
-    private:
         Item myItem;
         Node* myNext;
     };
 
+    int mySize;
     Node* myFirst;
     Node* myLast;
-    int mySize;
 };
 
 #endif
